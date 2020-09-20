@@ -11,7 +11,7 @@ var currentthirsImage;
 
 var totalClicks = 0;
 var numberOfRounds = 25;
-//var currentArry =[];
+var currentArry =[0,0,0];
 
 var result = document.getElementById('finalResult');
 function Product(proudactName, link) {
@@ -43,21 +43,30 @@ new Product('usb', 'img/usb.gif');
 new Product('water-can', 'img/water-can.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
-function generateRandom(FirstImage,SeconedImage) {
+var fistImage= Math.floor((Math.random() * Products.length));
+var secoundImage= generateRandom( -1, -1,fistImage,-1,-1);
+var thirdImage= generateRandom(-1 , fistImage,secoundImage,-1,-1);
+
+currentArry[0] = fistImage;
+currentArry[1] = secoundImage;
+currentArry[2] = thirdImage;
+displayImages(fistImage, secoundImage, thirdImage);
+
+
+function generateRandom(FirstImage,SeconedImage,thirdImage,newimage,new2image) {
   var num = Math.floor(Math.random()*(Products.length-0))+0;
-  return (num === FirstImage || num === SeconedImage)? generateRandom(FirstImage, SeconedImage):num;
+  return (num === FirstImage || num === SeconedImage || num === thirdImage|| num === newimage|| num === new2image)? generateRandom(FirstImage, SeconedImage,thirdImage,newimage,new2image):num;
 }
 
 function displayRandomImages() {
-  var fistImage;
-  var secoundImage;
-  var thirdImage;
-  fistImage = Math.floor((Math.random() * Products.length));
-  thirdImage = generateRandom(-1 , fistImage);
-  secoundImage = generateRandom( fistImage, thirdImage);
-//   currentArry[0] = fistImage;
-//   currentArry[1] = secoundImage;
-//   currentArry[2] = thirdImage;
+
+console.log(currentArry);
+  fistImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],-1,-1);
+  secoundImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],fistImage,-1);
+  thirdImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],secoundImage,fistImage);
+  currentArry[2] = thirdImage;
+  currentArry[1] = secoundImage;
+  currentArry[0] = fistImage;
   //  secoundImage = Math.floor((Math.random() * Products.length));
   //  thirdImage = Math.floor((Math.random() * Products.length));
   //  while (fistImage === thirdImage && secoundImage === thirdImage) {
@@ -123,3 +132,5 @@ function theResult(){
     result.appendChild(listItem);
   }
 }
+
+
