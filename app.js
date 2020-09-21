@@ -11,11 +11,12 @@ var currentthirsImage;
 
 var totalClicks = 0;
 var numberOfRounds = 25;
-var currentArry =[0,0,0];
+var currentArry = [0, 0, 0];
+
 
 var result = document.getElementById('finalResult');
 function Product(proudactName, link) {
-  this. proudactName = proudactName;
+  this.proudactName = proudactName;
   this.link = link;
   this.vote = 0;
   this.timedisplay = 0;
@@ -43,9 +44,9 @@ new Product('usb', 'img/usb.gif');
 new Product('water-can', 'img/water-can.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
-var fistImage= Math.floor((Math.random() * Products.length));
-var secoundImage= generateRandom( -1, -1,fistImage,-1,-1);
-var thirdImage= generateRandom(-1 , fistImage,secoundImage,-1,-1);
+var fistImage = Math.floor((Math.random() * Products.length));
+var secoundImage = generateRandom(-1, -1, fistImage, -1, -1);
+var thirdImage = generateRandom(-1, fistImage, secoundImage, -1, -1);
 
 currentArry[0] = fistImage;
 currentArry[1] = secoundImage;
@@ -53,17 +54,17 @@ currentArry[2] = thirdImage;
 displayImages(fistImage, secoundImage, thirdImage);
 
 
-function generateRandom(FirstImage,SeconedImage,thirdImage,newimage,new2image) {
-  var num = Math.floor(Math.random()*(Products.length-0))+0;
-  return (num === FirstImage || num === SeconedImage || num === thirdImage|| num === newimage|| num === new2image)? generateRandom(FirstImage, SeconedImage,thirdImage,newimage,new2image):num;
+function generateRandom(FirstImage, SeconedImage, thirdImage, newimage, new2image) {
+  var num = Math.floor(Math.random() * (Products.length - 0)) + 0;
+  return (num === FirstImage || num === SeconedImage || num === thirdImage || num === newimage || num === new2image) ? generateRandom(FirstImage, SeconedImage, thirdImage, newimage, new2image) : num;
 }
 
 function displayRandomImages() {
 
-console.log(currentArry);
-  fistImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],-1,-1);
-  secoundImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],fistImage,-1);
-  thirdImage = generateRandom(currentArry[0], currentArry[1],currentArry[2],secoundImage,fistImage);
+  console.log(currentArry);
+  fistImage = generateRandom(currentArry[0], currentArry[1], currentArry[2], -1, -1);
+  secoundImage = generateRandom(currentArry[0], currentArry[1], currentArry[2], fistImage, -1);
+  thirdImage = generateRandom(currentArry[0], currentArry[1], currentArry[2], secoundImage, fistImage);
   currentArry[2] = thirdImage;
   currentArry[1] = secoundImage;
   currentArry[0] = fistImage;
@@ -72,9 +73,9 @@ console.log(currentArry);
   //  while (fistImage === thirdImage && secoundImage === thirdImage) {
   //    thirdImage = Math.floor((Math.random() * Products.length));
   //  }
-  
+
   displayImages(fistImage, secoundImage, thirdImage);
- 
+
 }
 
 
@@ -84,7 +85,7 @@ function displayImages(firstIndex, secoundIndex, thirdIndex) {
   currentsecoundImage = Products[secoundIndex];
   currentthirsImage = Products[thirdIndex];
 
-  
+
   currentfirstImage.timedisplay++;
   currentsecoundImage.timedisplay++;
   currentthirsImage.timedisplay++;
@@ -103,13 +104,13 @@ function generateNewImage(event) {
   var clickImage;
   if (event.target.id === 'imag1') {
     clickImage = currentfirstImage;
-    
+
   } else if (event.target.id === 'imag2') {
     clickImage = currentsecoundImage;
-    
-  } else if(event.target.id === 'imag3') {
-    clickImage =currentthirsImage;
-   
+
+  } else if (event.target.id === 'imag3') {
+    clickImage = currentthirsImage;
+
   }
 
   if (clickImage) {
@@ -118,19 +119,168 @@ function generateNewImage(event) {
     totalClicks++;
   }
 
-  if(totalClicks>=25){
+  if (totalClicks >= 25) {
     imagesSection.removeEventListener('click', generateNewImage);
     theResult();
+    theChart();
+
   }
 
 }
-function theResult(){
+
+
+
+function theResult() {
   var listItem;
-  for( var i = 0; i< Products.length; i++){
+  for (var i = 0; i < Products.length; i++) {
     listItem = document.createElement('li');
     listItem.textContent = Products[i].proudactName + ' had ' + Products[i].vote + ' votes and was shown ' + Products[i].timedisplay + ' tiems';
     result.appendChild(listItem);
   }
 }
+var labels = [];
+var votes = [];
+var display = [];
+console.log(votes);
+for (var i = 0; i < Products.length; i++) {
+  labels.push(Products[i].proudactName);
+}
 
+
+function theChart() {
+
+  for (var j = 0; j < Products.length; j++) {
+    votes.push(Products[j].vote);
+  }
+
+  for (var x = 0; x < Products.length; x++) {
+    display.push(Products[x].timedisplay);
+  }
+
+
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '# of Votes',
+        data: votes,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        
+
+
+        borderWidth: 1
+
+      },
+      {
+        label: '# of display',
+        data: display,
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        
+
+
+        borderWidth: 1
+
+      }
+    ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
 

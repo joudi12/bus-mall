@@ -23,7 +23,7 @@ main #imagsection #finalResult footer{
     border: 2px black solid;
      padding: 30px;
      padding-bottom: 170px; 
-     background-color: yellow;
+     background-color: bisque;
      padding-top: 0px;
 
 }
@@ -43,18 +43,24 @@ main #imagsection #finalResult footer{
     float: right;
     margin-top: 20px;
 }
-#parag{
+/* #parag{
     float: right;
     margin-top: 20px;
     width: 500px;
     height: 300px;
-    /* display: inline-block; */
-    margin-right: 560px;
+    display: inline-block; */
+    /* margin-right: 560px;
     margin-top: 80px;
     font-size: medium;
     font-family: Georgia, 'Times New Roman', Times, serif;
-}
+}   */
 /* footer{
     height: 100px;
     display: inline-block;
 } */
+#chartsec{
+    width: 1000px;
+    height: 800px;
+    display: inline-block;
+    margin-top: 50px;
+}
